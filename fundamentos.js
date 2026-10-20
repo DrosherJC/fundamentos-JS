@@ -161,3 +161,70 @@ const perfilExtraido = {
 
 // Mostrar el objeto.
 console.log("Perfil extraído:", perfilExtraido);
+
+
+// 5. ARREGLOS
+console.log("\n=== 5. ARREGLOS ===");
+
+const publicaciones = [
+    { usuario: "crazy_sam88", likes: 120, comentarios: 15, hashtag: "@clipstudioofficial_es" },
+    { usuario: "luis", likes: 450, comentarios: 30, hashtag: "" },
+    { usuario: "cuevas", likes: 80, comentarios: 5, hashtag: "" }
+];
+
+publicaciones.forEach(function (post) {
+    console.log(post.usuario, "| Likes:", post.likes, "| Comentarios:", post.comentarios);
+});
+
+
+// 6. MANIPULACIÓN DEL DOM (SIMULADA)
+console.log("\n=== 6. SIMULACIÓN DE NODOS DOM ===");
+
+publicaciones.forEach(post => {
+    const tarjetaSimulada = {
+        contenidoHTML: `
+            <h2>${post.usuario}</h2>
+            <p>${post.likes}</p>
+            <p>${post.comentarios}</p>
+            <p>${post.hashtag}</p>`
+    };
+    console.log("Elemento DOM simulado que se inyectaría:", tarjetaSimulada);
+});
+
+
+// 7. ASINCRONISMO
+console.log("\n=== 7. ASINCRONISMO ===");
+
+const obtenerPublicacionesDesdeServidor = () => {
+    return new Promise((resolve, reject) => {
+        console.log("Conectando con la base de datos de publicaciones...");
+
+        // Simulamos un retraso de red de 2 segundos
+        setTimeout(() => {
+            const exito = true; // Cambia a false para probar el manejo de errores
+            if (exito) {
+                resolve(publicaciones);
+            } else {
+                reject("Error: No se pudieron obtener las publicaciones.");
+            }
+        }, 2000);
+    });
+};
+
+obtenerPublicacionesDesdeServidor()
+    .then(datos => console.log("Datos recibidos:", datos))
+    .catch(error => console.log(error));
+
+
+// 8. API - LOCAL STORAGE
+console.log("\n--- GUARDADO EN LOCAL STORAGE ---");
+
+try {
+    localStorage.setItem("postsInstagram", JSON.stringify(publicaciones));
+    console.log("¡Datos guardados en el Local Storage!");
+
+    const datosRecuperados = JSON.parse(localStorage.getItem("postsInstagram"));
+    console.log("Datos recuperados del navegador:", datosRecuperados);
+} catch (e) {
+    console.log("LocalStorage no disponible en este entorno de terminal.");
+}
